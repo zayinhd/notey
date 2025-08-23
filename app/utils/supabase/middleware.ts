@@ -6,7 +6,7 @@ export async function updateSession(request: NextRequest) {
         request,
     });
 
-    const supabase = createServerClient(
+    const supabase = await createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
         {
@@ -30,7 +30,10 @@ export async function updateSession(request: NextRequest) {
     );
 
     // refreshing the auth token
-    await supabase.auth.getUser();
+    const {
+        data: { session },
+        error,
+    } = await supabase.auth.getSession();
 
-    return supabaseResponse;
+    return { session, error, supabaseResponse };
 }

@@ -1,8 +1,8 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "../utils/supabase/server";
+import { revalidatePath } from "next/cache";
 
 export async function signInWithGoogle() {
     const supabase = await createClient();
@@ -29,7 +29,6 @@ export async function login(formData: FormData) {
         redirect("/error");
     }
 
-    revalidatePath("/", "layout");
     redirect("/dashboard");
 }
 
@@ -47,6 +46,17 @@ export async function signup(formData: FormData) {
         redirect("/error");
     }
 
-    revalidatePath("/", "layout");
-    redirect("/private");
+    redirect("/dashboard");
+}
+
+export async function logout() {
+    const supabase = await createClient();
+
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    redirect("/auth/login");
 }

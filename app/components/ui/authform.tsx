@@ -1,6 +1,5 @@
-"use client";
-
 import { signInWithGoogle } from "../../auth/actions";
+import Link from "next/link";
 
 type AuthFormProps = {
     onSubmit: (formData: FormData) => void | Promise<void>;
@@ -10,11 +9,11 @@ type AuthFormProps = {
 export default function AuthForm({ onSubmit, type }: AuthFormProps) {
     return (
         <>
-            <div className="w-[50%] h-[50%] rounded-3xl bg-blue-800 flex flex-col justify-center items-center">
+            <div className="w-[50%] h-[60%] rounded-3xl bg-blue-800 flex flex-col justify-center items-center">
                 <div className="my-5 text-center text-4xl">
                     <h1>{type === "login" ? "Login" : "Sign Up"}</h1>
                 </div>
-                <form>
+                <form method="post">
                     <div className=" flex flex-col justify-center items-center">
                         <input
                             id="email"
@@ -45,11 +44,34 @@ export default function AuthForm({ onSubmit, type }: AuthFormProps) {
                         </div>
                         <div className="mb-5 text-center">
                             <button
-                                formAction={signInWithGoogle}
+                                onClick={signInWithGoogle}
                                 className="w-42 m-2 p-2 bg-white text-black rounded-4xl"
                             >
                                 Signin with Google
                             </button>
+                        </div>
+                        <div className="mb-5 text-center">
+                            {type === "login" ? (
+                                <p>
+                                    Don&apos;t have an account?{" "}
+                                    <Link
+                                        href="/auth/signup"
+                                        className="text-yellow-300 underline"
+                                    >
+                                        Sign up
+                                    </Link>
+                                </p>
+                            ) : (
+                                <p>
+                                    Already have an account?{" "}
+                                    <Link
+                                        href="/auth/login"
+                                        className="text-yellow-300 underline"
+                                    >
+                                        Login
+                                    </Link>
+                                </p>
+                            )}
                         </div>
                     </div>
                 </form>
