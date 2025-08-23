@@ -1,5 +1,5 @@
-import { signInWithGoogle } from "../../auth/actions";
 import Link from "next/link";
+import GoogleAuthButton from "./googleauthbutton";
 
 type AuthFormProps = {
     onSubmit: (formData: FormData) => void | Promise<void>;
@@ -42,14 +42,7 @@ export default function AuthForm({ onSubmit, type }: AuthFormProps) {
                         <div className=" text-center text-2xl">
                             <h1>Or</h1>
                         </div>
-                        <div className="mb-5 text-center">
-                            <button
-                                onClick={signInWithGoogle}
-                                className="w-42 m-2 p-2 bg-white text-black rounded-4xl"
-                            >
-                                Signin with Google
-                            </button>
-                        </div>
+
                         <div className="mb-5 text-center">
                             {type === "login" ? (
                                 <p>
@@ -75,6 +68,10 @@ export default function AuthForm({ onSubmit, type }: AuthFormProps) {
                         </div>
                     </div>
                 </form>
+                <div className=" text-center text-2xl">
+                    <h1>Or</h1>
+                </div>
+                <GoogleAuthButton />
             </div>
         </>
     );
