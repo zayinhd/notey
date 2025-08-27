@@ -17,7 +17,7 @@ It is designed for individuals and teams to capture ideas, stay organized, and w
 
 ## Tech Stack
 - Frontend: Next.js (React), Tailwind CSS, Framer Motion
-- Backend: Node.js / Express (or Next.js API routes)
+- Backend: Node.js  (or Next.js API routes)
 - Database: Supabase
 - Authentication: Supabase Auth (Email, Google)
 - Deployment: Vercel
