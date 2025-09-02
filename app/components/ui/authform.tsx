@@ -9,7 +9,7 @@ type AuthFormProps = {
 export default function AuthForm({ onSubmit, type }: AuthFormProps) {
     return (
         <>
-            <div className="w-[50%] h-[60%] rounded-3xl bg-blue-800 flex flex-col justify-center items-center">
+            <div className="w-[50%] h-[60%] rounded-3xl bg-tertiary flex flex-col justify-center items-center">
                 <div className="my-5 text-center text-4xl">
                     <h1>{type === "login" ? "Login" : "Sign Up"}</h1>
                 </div>
