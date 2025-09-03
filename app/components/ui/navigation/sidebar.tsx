@@ -1,6 +1,8 @@
 "use client";
-import { motion } from "motion/react";
+
+import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import Link from "next/link";
 
 interface SidebarProps {
     open: boolean;
@@ -9,42 +11,43 @@ interface SidebarProps {
 
 export default function Sidebar({ open, setOpen }: SidebarProps) {
     return (
-        <>
+        <AnimatePresence>
             {open && (
-                <div
-                    onClick={() => setOpen(false)}
-                    className="fixed inset-0 bg-black/40 z-40"
-                />
-            )}
-
-            <motion.aside
-                initial={{ x: "100%" }}
-                animate={{ x: open ? "0%" : "100%" }}
-                transition={{ type: "tween", duration: 0.3 }}
-                className="fixed top-20 right-0 h-80 w-64 bg-white shadow-lg z-50 p-6"
-            >
-                <button
-                    onClick={() => setOpen(false)}
-                    className="mb-6 p-2 rounded-lg hover:bg-gray-100"
+                <motion.div
+                    key="user-sidebar"
+                    initial={{ x: "100%" }}
+                    animate={{ x: 0 }}
+                    exit={{ x: "100%" }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className={`w-32 mr-1 fixed top-16  h-80 rounded bg-white shadow-lg z-50 p-2`}
                 >
-                    <X size={24} />
-                </button>
+                    <div className="mt-6 flex  flex-col ">
+                        <div className="flex flex-row-reverse ">
+                            <button
+                                onClick={() => setOpen(!open)}
+                                className="p-2 rounded hover:bg-secondary hover:text-white"
+                            >
+                                <X size={16} />
+                            </button>
+                        </div>
 
-                <nav className="flex flex-col gap-4">
-                    <a href="#" className="hover:text-blue-600">
-                        Home
-                    </a>
-                    <a href="#" className="hover:text-blue-600">
-                        About
-                    </a>
-                    <a href="#" className="hover:text-blue-600">
-                        Services
-                    </a>
-                    <a href="#" className="hover:text-blue-600">
-                        Contact
-                    </a>
-                </nav>
-            </motion.aside>
-        </>
+                        <ul className=" mx-auto pt-6 flex flex-col items-center gap-4">
+                            <li className="w-full p-1  rounded hover:text-white hover:bg-secondary">
+                                <Link href="#">Profile</Link>
+                            </li>
+                            <li className="w-full p-1  rounded hover:text-white hover:bg-secondary">
+                                <Link href="#">Progress</Link>
+                            </li>
+                            <li className="w-full p-1  rounded hover:text-white hover:bg-secondary">
+                                <Link href="#">History</Link>
+                            </li>
+                            <li className="w-full p-1  rounded hover:text-white hover:bg-secondary">
+                                <Link href="#">Settings</Link>
+                            </li>
+                        </ul>
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 }
