@@ -1,5 +1,6 @@
 "use client";
 
+import { logout } from "@/app/auth/actions";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import Link from "next/link";
@@ -19,11 +20,12 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
                     animate={{ x: 0 }}
                     exit={{ x: "100%" }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className={`w-32 mr-1 fixed top-16  h-80 rounded bg-white shadow-lg z-50 p-2`}
+                    className={`w-32 mx-1 fixed top-18 right-1 h-80 rounded bg-white shadow-lg z-50 p-2`}
                 >
                     <div className="mt-6 flex  flex-col ">
                         <div className="flex flex-row-reverse ">
                             <button
+                                aria-label="Close sidebar"
                                 onClick={() => setOpen(!open)}
                                 className="p-2 rounded hover:bg-secondary hover:text-white"
                             >
@@ -41,8 +43,15 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
                             <li className="w-full p-1  rounded hover:text-white hover:bg-secondary">
                                 <Link href="#">History</Link>
                             </li>
-                            <li className="w-full p-1  rounded hover:text-white hover:bg-secondary">
-                                <Link href="#">Settings</Link>
+                            <li className="w-full p-1  rounded bg-primary text-white hover:text-white hover:bg-secondary">
+                                <button
+                                    onClick={async () => {
+                                        setOpen(false);
+                                        await logout();
+                                    }}
+                                >
+                                    Logout
+                                </button>
                             </li>
                         </ul>
                     </div>

@@ -3,9 +3,25 @@
 import { useState } from "react";
 import Image from "next/image";
 import Sidebar from "./sidebar";
+import Link from "next/link";
+import type { User } from "@supabase/supabase-js";
 
-export default function NavbarClient({ user }: { user: any }) {
+export default function NavbarClient({ user }: { user: User | null }) {
     const [open, setOpen] = useState(false);
+
+    const fullName =
+        user?.user_metadata?.full_name ||
+        user?.user_metadata?.name ||
+        user?.email ||
+        "";
+
+    const initials = fullName
+        ? fullName
+              .split(" ")
+              .map((n: string) => n.charAt(0))
+              .join(".")
+              .toUpperCase()
+        : "?";
 
     return (
         <>
@@ -13,26 +29,29 @@ export default function NavbarClient({ user }: { user: any }) {
                 <h1 className="text-xl font-bold">Notey</h1>
 
                 <div>
-                    {user?.user_metadata?.avatar_url ? (
+                    {user ? (
                         <button
                             onClick={() => setOpen(!open)}
-                            className=" p-2 rounded-full hover:bg-secondary"
+                            className="p-2 rounded-full hover:bg-secondary"
                         >
-                            <Image
-                                src={user.user_metadata.avatar_url}
-                                alt="User profile"
-                                width={32}
-                                height={32}
-                                className="rounded-full "
-                            />
+                            {user.user_metadata?.avatar_url ? (
+                                <Image
+                                    src={user.user_metadata.avatar_url}
+                                    alt="User profile"
+                                    width={32}
+                                    height={32}
+                                    className="rounded-full"
+                                />
+                            ) : (
+                                <div className="w-8 h-8 flex items-center justify-center rounded-full bg-primary text-sm text-white font-semibold">
+                                    {initials}
+                                </div>
+                            )}
                         </button>
                     ) : (
-                        <button
-                            onClick={() => setOpen(true)}
-                            className="md:hidden p-2 rounded-lg hover:bg-gray-100"
-                        >
-                            Login
-                        </button>
+                        <div className="md:hidden p-2 rounded-lg hover:bg-primary hover:text-white">
+                            <Link href="/auth/login">Login</Link>
+                        </div>
                     )}
                 </div>
             </nav>
