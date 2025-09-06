@@ -9,12 +9,22 @@ type AuthFormProps = {
 export default function AuthForm({ onSubmit, type }: AuthFormProps) {
     return (
         <>
-            <div className="w-[50%] h-[60%] rounded-3xl bg-tertiary flex flex-col justify-center items-center">
+            <div className="w-[50%] h-auto rounded-3xl bg-primary text-white flex flex-col justify-center items-center">
                 <div className="my-5 text-center text-4xl">
                     <h1>{type === "login" ? "Login" : "Sign Up"}</h1>
                 </div>
                 <form method="post">
                     <div className=" flex flex-col justify-center items-center">
+                        {type === "signup" && (
+                            <input
+                                id="fullname"
+                                name="name"
+                                type="text"
+                                className="mb-4 p-2 border-2 rounded-2xl "
+                                placeholder="Fullname"
+                                required
+                            />
+                        )}
                         <input
                             id="email"
                             name="email"
@@ -34,7 +44,7 @@ export default function AuthForm({ onSubmit, type }: AuthFormProps) {
                         />
                         <button
                             formAction={onSubmit}
-                            className="w-42 m-2 p-2 bg-green-600 rounded-4xl"
+                            className="w-42 m-2 p-2 bg-secondary rounded-4xl hover:bg-white hover:text-primary"
                         >
                             {type === "login" ? "Log in" : "Sign up"}
                         </button>
